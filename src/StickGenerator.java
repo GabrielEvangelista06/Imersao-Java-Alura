@@ -20,6 +20,7 @@ public class StickGenerator {
         graphics.drawImage(originalImage,0, 0, null);
 
         // Escrever uma frase na nova imagem
+        graphics.drawString("Deixa a arma, pegue o cannoli", 0, newHeight - 100);
 
         // Escrever a nova imagem em um arquivo
         ImageIO.write(newImage, "png", new File("images/sticker.png"));
