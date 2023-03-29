@@ -1,10 +1,6 @@
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -12,15 +8,13 @@ public class App {
     public static void main(String[] args) throws IOException, InterruptedException {
         // Fazer um conexão HTTP e buscar os TOP 250 filmes
         String url = "https://api.nasa.gov/planetary/apod?api_key=6QxCgNSDuBbgIhke6m3aymdgbSIRNYndw6p84EhJ";
-        URI endereco = URI.create(url);
-        var client = HttpClient.newHttpClient();
-        var request = HttpRequest.newBuilder(endereco).GET().build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        String body = response.body();
+
+        var http = new ClientHttp();
+        String json = http.getData(url);
 
         // Pegar somente os dados que interessam (Título, poster, classificação)
         var parser = new JsonParser();
-        List<Map<String, String>> contentList = parser.parse(body);
+        List<Map<String, String>> contentList = parser.parse(json);
 
         // Exibir e manipular os dados
         for (Map<String, String> content : contentList) {
