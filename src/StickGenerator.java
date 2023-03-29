@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,8 @@ public class StickGenerator {
         BufferedImage newImage = new BufferedImage(width, newHeight, BufferedImage.TRANSLUCENT);
 
         // Copiar a imagem original para nova imagem (em memória)
+        Graphics2D graphics = (Graphics2D) newImage.getGraphics();
+        graphics.drawImage(originalImage,0, 0, null);
 
         // Escrever uma frase na nova imagem
 
