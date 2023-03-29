@@ -7,7 +7,12 @@ public class StickGenerator {
     public void create() throws IOException {
         // Ler a imagem
         BufferedImage originalImage = ImageIO.read(new File("images/movie.jpg"));
+
         // Criar nova imagem em memória com transparência e com tamanhho novo
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight();
+        int newHeight = height + 200;
+        BufferedImage newImage = new BufferedImage(width, newHeight, BufferedImage.TRANSLUCENT);
 
         // Copiar a imagem original para nova imagem (em memória)
 
