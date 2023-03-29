@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,14 @@ public class StickGenerator {
         graphics.setColor(Color.WHITE);
 
         // Escrever uma frase na nova imagem
-        graphics.drawString("DEIXA A ARMA, PEGUE O CANNOLI", 100, newHeight - 100);
+        String text = "DEIXA A ARMA, PEGUE O CANNOLI";
+        FontMetrics fontMetrics = graphics.getFontMetrics();
+        Rectangle2D rectangle = fontMetrics.getStringBounds(text, graphics);
+        int textWidth = (int) rectangle.getWidth();
+        int textPosition = (width - textWidth) / 2;
+
+
+        graphics.drawString(text, textPosition, newHeight - 100);
 
         // Escrever a nova imagem em um arquivo
         ImageIO.write(newImage, "png", new File("images/" + fileName));
