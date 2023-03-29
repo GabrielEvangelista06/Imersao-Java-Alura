@@ -1,5 +1,8 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -31,10 +34,24 @@ public class StickGenerator {
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D rectangle = fontMetrics.getStringBounds(text, graphics);
         int textWidth = (int) rectangle.getWidth();
-        int textPosition = (width - textWidth) / 2;
+        int textPositionX = (width - textWidth) / 2;
+        int textPositionY = newHeight - 100;
 
+        graphics.drawString(text, textPositionX, textPositionY);
 
-        graphics.drawString(text, textPosition, newHeight - 100);
+        FontRenderContext fontRenderContext = graphics.getFontRenderContext();
+        var textLayout = new TextLayout(text, font, fontRenderContext);
+
+        Shape outline = textLayout.getOutline(null);
+        AffineTransform transform = graphics.getTransform();
+        transform.translate(textPositionX, textPositionY);
+        graphics.setTransform(transform);
+        var outlineStroke = new BasicStroke(width * 0.004f);
+        graphics.setStroke(outlineStroke);
+
+        graphics.setColor(Color.BLACK);
+        graphics.draw(outline);
+        graphics.setClip(outline);
 
         // Escrever a nova imagem em um arquivo
         ImageIO.write(newImage, "png", new File("images/" + fileName));
