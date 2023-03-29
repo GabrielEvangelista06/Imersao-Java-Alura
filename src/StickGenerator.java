@@ -29,6 +29,6 @@ public class StickGenerator {
         graphics.drawString("DEIXA A ARMA, PEGUE O CANNOLI", 100, newHeight - 100);
 
         // Escrever a nova imagem em um arquivo
-        ImageIO.write(newImage, "png", new File(fileName));
+        ImageIO.write(newImage, "png", new File("images/" + fileName));
     }
 }
