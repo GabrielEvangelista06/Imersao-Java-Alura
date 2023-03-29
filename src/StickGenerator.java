@@ -2,15 +2,12 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 public class StickGenerator {
-    public void create() throws IOException {
+    public void create(InputStream inputStream, String fileName) throws IOException {
         // Ler a imagem
-        InputStream inputStream = new URL("https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@.jpg").openStream();
         BufferedImage originalImage = ImageIO.read(inputStream);
 
         // Criar nova imagem em memória com transparência e com tamanhho novo
@@ -32,11 +29,6 @@ public class StickGenerator {
         graphics.drawString("DEIXA A ARMA, PEGUE O CANNOLI", 100, newHeight - 100);
 
         // Escrever a nova imagem em um arquivo
-        ImageIO.write(newImage, "png", new File("images/sticker.png"));
-    }
-
-    public static void main(String[] args) throws IOException {
-        var generator = new StickGenerator();
-        generator.create();
+        ImageIO.write(newImage, "png", new File(fileName));
     }
 }
