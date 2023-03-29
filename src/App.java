@@ -27,17 +27,27 @@ public class App {
 
             String urlImage = movie.get("image");
             String title = movie.get("title");
+            double rating = Double.parseDouble(movie.get("imDbRating"));
+
+            String stickerText;
+            if (rating >= 9.0) {
+                stickerText = "TOP DEMAIS";
+            } else {
+                stickerText = "Bom";
+            }
+
+
             InputStream inputStream = new URL(urlImage).openStream();
 
             String fileName = title + ".png";
 
             var generator = new StickGenerator();
-            generator.create(inputStream, fileName);
+            generator.create(inputStream, fileName, stickerText);
 
             System.out.println("\u001b[1mTítulo: \u001b[m" + movie.get("title"));
             System.out.println("\u001b[1m\u001b[40m\u001b[34mNota do filme: " + movie.get("imDbRating") + "\u001b[m\u001b[m");
 
-            double rating = Double.parseDouble(movie.get("imDbRating"));
+
             int starsNumber = (int) rating;
 
             for (int i = 1; i <= starsNumber; i++) {

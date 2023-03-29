@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class StickGenerator {
-    public void create(InputStream inputStream, String fileName) throws IOException {
+    public void create(InputStream inputStream, String fileName, String text) throws IOException {
         // Ler a imagem
         BufferedImage originalImage = ImageIO.read(inputStream);
 
@@ -30,7 +30,6 @@ public class StickGenerator {
         graphics.setColor(Color.WHITE);
 
         // Escrever uma frase na nova imagem
-        String text = "DEIXA A ARMA, PEGUE O CANNOLI";
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D rectangle = fontMetrics.getStringBounds(text, graphics);
         int textWidth = (int) rectangle.getWidth();
