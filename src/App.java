@@ -11,24 +11,24 @@ import java.util.Map;
 public class App {
     public static void main(String[] args) throws IOException, InterruptedException {
         // Fazer um conexão HTTP e buscar os TOP 250 filmes
-        String url = "https://raw.githubusercontent.com/lukadev08/lukadev08.github.io/main/apidata/imdbtop250moviesdata.json";
+        String url = "https://api.nasa.gov/planetary/apod?api_key=6QxCgNSDuBbgIhke6m3aymdgbSIRNYndw6p84EhJ";
         URI endereco = URI.create(url);
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(endereco).GET().build();
-        HttpResponse<String> reponse = client.send(request, HttpResponse.BodyHandlers.ofString());
-        String body = reponse.body();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        String body = response.body();
 
         // Pegar somente os dados que interessam (Título, poster, classificação)
         var parser = new JsonParser();
-        List<Map<String, String>> movieList = parser.parse(body);
+        List<Map<String, String>> contentList = parser.parse(body);
 
         // Exibir e manipular os dados
-        for (Map<String, String> movie : movieList) {
+        for (Map<String, String> content : contentList) {
 
-            String urlImage = movie.get("image");
+            String urlImage = content.get("url");
             String urlBigImage = urlImage.replaceFirst("(@?\\.)([0-9A-Z,_]+).jpg$", "$1.jpg");
-            String title = movie.get("title");
-            double rating = Double.parseDouble(movie.get("imDbRating"));
+            String title = content.get("title");
+            double rating = Double.parseDouble(content.get("imDbRating"));
 
             String stickerText;
             if (rating >= 9.0) {
@@ -45,8 +45,8 @@ public class App {
             var generator = new StickGenerator();
             generator.create(inputStream, fileName, stickerText);
 
-            System.out.println("\u001b[1mTítulo: \u001b[m" + movie.get("title"));
-            System.out.println("\u001b[1m\u001b[40m\u001b[34mNota do filme: " + movie.get("imDbRating") + "\u001b[m\u001b[m");
+            System.out.println("\u001b[1mTítulo: \u001b[m" + content.get("title"));
+            System.out.println("\u001b[1m\u001b[40m\u001b[34mNota do filme: " + content.get("imDbRating") + "\u001b[m\u001b[m");
 
 
             int starsNumber = (int) rating;
