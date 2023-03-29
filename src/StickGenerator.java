@@ -19,8 +19,13 @@ public class StickGenerator {
         Graphics2D graphics = (Graphics2D) newImage.getGraphics();
         graphics.drawImage(originalImage,0, 0, null);
 
+        // Setar a fonte
+        var font = new Font(Font.SANS_SERIF, Font.BOLD, 52);
+        graphics.setFont(font);
+        graphics.setColor(Color.YELLOW);
+
         // Escrever uma frase na nova imagem
-        graphics.drawString("Deixa a arma, pegue o cannoli", 0, newHeight - 100);
+        graphics.drawString("DEIXA A ARMA, PEGUE O CANNOLI", 100, newHeight - 100);
 
         // Escrever a nova imagem em um arquivo
         ImageIO.write(newImage, "png", new File("images/sticker.png"));
