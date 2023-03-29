@@ -21,7 +21,7 @@ public class StickGenerator {
         graphics.drawImage(originalImage, 0, 0, null);
 
         // Setar a fonte
-        var font = new Font(Font.SANS_SERIF, Font.BOLD, 52);
+        var font = new Font("Comic Sans MS", Font.BOLD, 52);
         graphics.setFont(font);
         graphics.setColor(Color.WHITE);
 
