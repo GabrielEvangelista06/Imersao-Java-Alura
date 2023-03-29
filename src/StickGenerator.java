@@ -6,7 +6,7 @@ import java.io.IOException;
 public class StickGenerator {
     public void create() throws IOException {
         // Ler a imagem
-
+        BufferedImage originalImage = ImageIO.read(new File("images/movie.jpg"));
         // Criar nova imagem em memória com transparência e com tamanhho novo
 
         // Copiar a imagem original para nova imagem (em memória)
