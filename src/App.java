@@ -26,6 +26,7 @@ public class App {
         for (Map<String, String> movie : movieList) {
 
             String urlImage = movie.get("image");
+            String urlBigImage = urlImage.replaceFirst("(@?\\.)([0-9A-Z,_]+).jpg$", "$1.jpg");
             String title = movie.get("title");
             double rating = Double.parseDouble(movie.get("imDbRating"));
 
@@ -37,7 +38,7 @@ public class App {
             }
 
 
-            InputStream inputStream = new URL(urlImage).openStream();
+            InputStream inputStream = new URL(urlBigImage).openStream();
 
             String fileName = title + ".png";
 
