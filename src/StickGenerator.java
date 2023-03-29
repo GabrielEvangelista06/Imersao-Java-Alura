@@ -22,5 +22,6 @@ public class StickGenerator {
         // Escrever uma frase na nova imagem
 
         // Escrever a nova imagem em um arquivo
+        ImageIO.write(newImage, "png", new File("images/sticker.png"));
     }
 }
