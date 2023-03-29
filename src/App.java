@@ -1,5 +1,7 @@
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -22,8 +24,17 @@ public class App {
 
         // Exibir e manipular os dados
         for (Map<String, String> movie : movieList) {
+
+            String urlImage = movie.get("image");
+            String title = movie.get("title");
+            InputStream inputStream = new URL(urlImage).openStream();
+
+            String fileName = title + ".png";
+
+            var generator = new StickGenerator();
+            generator.create(inputStream, fileName);
+
             System.out.println("\u001b[1mTítulo: \u001b[m" + movie.get("title"));
-            System.out.println("\u001b[1mURL da Imagem: \u001b[m" + movie.get("image"));
             System.out.println("\u001b[1m\u001b[40m\u001b[34mNota do filme: " + movie.get("imDbRating") + "\u001b[m\u001b[m");
 
             double rating = Double.parseDouble(movie.get("imDbRating"));
