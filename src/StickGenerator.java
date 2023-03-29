@@ -24,4 +24,9 @@ public class StickGenerator {
         // Escrever a nova imagem em um arquivo
         ImageIO.write(newImage, "png", new File("images/sticker.png"));
     }
+
+    public static void main(String[] args) throws IOException {
+        var generator = new StickGenerator();
+        generator.create();
+    }
 }
