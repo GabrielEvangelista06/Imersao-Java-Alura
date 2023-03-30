@@ -6,7 +6,8 @@ import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws IOException, InterruptedException {
-        String url = "https://api.nasa.gov/planetary/apod?api_key=6QxCgNSDuBbgIhke6m3aymdgbSIRNYndw6p84EhJ&start_date=2023-03-27&end_date=2023-03-30";
+        API api = API.NASA;
+        String url = api.getUrl();
 
         var http = new ClientHttp();
         String json = http.getData(url);
