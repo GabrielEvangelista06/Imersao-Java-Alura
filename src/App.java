@@ -6,13 +6,13 @@ import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws IOException, InterruptedException {
-        API api = API.NASA;
+        API api = API.IMDB_TOP_MOVIES;
         String url = api.getUrl();
 
         var http = new ClientHttp();
         String json = http.getData(url);
 
-        ContentExtractor extractor = new NasaContentExtractor();
+        ContentExtractor extractor = api.getExtractor();
         List<Content> contents = extractor.extractContent(json);
 
         var generator = new StickGenerator();
