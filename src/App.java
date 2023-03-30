@@ -21,12 +21,12 @@ public class App {
         for (int i = 0; i < contents.size(); i++) {
             Content content = contents.get(i);
 
-            InputStream inputStream = new URL(content.getImageUrl()).openStream();
-            String fileName = content.getTitle() + ".png";
+            InputStream inputStream = new URL(content.imageUrl()).openStream();
+            String fileName = content.title() + ".png";
 
             generator.create(inputStream, fileName, stickerText);
 
-            System.out.println("\u001b[1mTítulo: \u001b[m" + content.getTitle());
+            System.out.println("\u001b[1mTítulo: \u001b[m" + content.title());
         }
     }
 }
