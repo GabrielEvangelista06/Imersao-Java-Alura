@@ -4,13 +4,11 @@ import java.util.Map;
 
 public class IMDBContentExtractor {
     public List<Content> extractContent(String json) {
-        // Pegar somente os dados que interessam (Título, poster, classificação)
         var parser = new JsonParser();
         List<Map<String, String>> attributeList = parser.parse(json);
 
-        List<Content> contents = new ArrayList<>();
 
-        // Popular a lista de contents
+        List<Content> contents = new ArrayList<>();
 
         for (Map<String, String> attributes : attributeList) {
             String title = attributes.get("title");
