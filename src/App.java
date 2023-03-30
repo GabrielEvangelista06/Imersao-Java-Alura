@@ -6,49 +6,27 @@ import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws IOException, InterruptedException {
-        // Fazer um conexão HTTP e buscar os TOP 250 filmes
-        String url = "https://api.nasa.gov/planetary/apod?api_key=6QxCgNSDuBbgIhke6m3aymdgbSIRNYndw6p84EhJ";
+        String url = "https://api.nasa.gov/planetary/apod?api_key=6QxCgNSDuBbgIhke6m3aymdgbSIRNYndw6p84EhJ&start_date=2023-03-30&end_date=2023-03-30";
 
         var http = new ClientHttp();
         String json = http.getData(url);
 
-        // Pegar somente os dados que interessam (Título, poster, classificação)
-        var parser = new JsonParser();
-        List<Map<String, String>> contentList = parser.parse(json);
+        NasaContentExtractor nasaContentExtractor = new NasaContentExtractor();
+        List<Content> contents = nasaContentExtractor.extractContent(json);
 
-        // Exibir e manipular os dados
-        for (Map<String, String> content : contentList) {
+        var generator = new StickGenerator();
 
-            String urlImage = content.get("url");
-            String urlBigImage = urlImage.replaceFirst("(@?\\.)([0-9A-Z,_]+).jpg$", "$1.jpg");
-            String title = content.get("title");
-            double rating = Double.parseDouble(content.get("imDbRating"));
+        String stickerText = "Parabéns";
 
-            String stickerText;
-            if (rating >= 9.0) {
-                stickerText = "TOP DEMAIS";
-            } else {
-                stickerText = "Bom";
-            }
+        for (int i = 0; i < contents.size(); i++) {
+            Content content = contents.get(i);
 
+            InputStream inputStream = new URL(content.getImageUrl()).openStream();
+            String fileName = content.getTitle() + ".png";
 
-            InputStream inputStream = new URL(urlBigImage).openStream();
-
-            String fileName = title + ".png";
-
-            var generator = new StickGenerator();
             generator.create(inputStream, fileName, stickerText);
 
-            System.out.println("\u001b[1mTítulo: \u001b[m" + content.get("title"));
-            System.out.println("\u001b[1m\u001b[40m\u001b[34mNota do filme: " + content.get("imDbRating") + "\u001b[m\u001b[m");
-
-
-            int starsNumber = (int) rating;
-
-            for (int i = 1; i <= starsNumber; i++) {
-                System.out.print("\uD83C\uDF1F");
-            }
-            System.out.println("\n");
+            System.out.println("\u001b[1mTítulo: \u001b[m" + content.getTitle());
         }
     }
 }
